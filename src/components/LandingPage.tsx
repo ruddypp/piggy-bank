@@ -58,7 +58,7 @@ export function LandingPage() {
     {
       icon: ArrowDownCircle,
       title: 'Deposit',
-      description: 'Deposit ETH to your SimpleBank account instantly and securely',
+      description: 'Deposit ETH to your PiggyBank account instantly and securely',
       color: 'from-blue-400 to-blue-600',
       delay: 0.1,
     },
@@ -174,7 +174,7 @@ export function LandingPage() {
                     className="inline-block"
                     whileHover={{ scale: 1.05 }}
                   >
-                    Simple
+                    Piggy
                   </motion.span>
                   <br />
                   <motion.span
@@ -431,7 +431,7 @@ export function LandingPage() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
             >
-              Why Choose SimpleBank?
+              Why Choose PiggyBank?
             </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

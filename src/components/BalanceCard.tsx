@@ -87,7 +87,7 @@ export function BalanceCard() {
         </div>
         <h2 className="text-5xl font-black mb-2">Check Balance</h2>
         <p className="text-xl font-bold text-gray-700">
-          View your SimpleBank account details
+          View your PiggyBank account details
         </p>
       </div>
 

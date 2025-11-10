@@ -89,7 +89,7 @@ export function WithdrawCard() {
         </div>
         <h2 className="text-5xl font-black mb-2">Withdraw ETH</h2>
         <p className="text-xl font-bold text-gray-700">
-          Take funds from your SimpleBank account
+          Take funds from your PiggyBank account
         </p>
       </div>
 

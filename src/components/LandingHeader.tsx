@@ -25,7 +25,7 @@ export function LandingHeader() {
             <div className="bg-black rounded-[15px] p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]">
               <Wallet className="w-6 h-6 text-[#f9dc5c]" strokeWidth={2.5} />
             </div>
-            <h1 className="text-2xl font-black text-black">SimpleBank</h1>
+            <h1 className="text-2xl font-black text-black">PiggyBank</h1>
           </motion.div>
 
           {/* Desktop Navigation */}

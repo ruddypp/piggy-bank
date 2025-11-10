@@ -130,7 +130,7 @@ export function Header() {
               <Wallet className="w-8 h-8 text-[#f9dc5c]" strokeWidth={2.5} />
             </motion.div>
             <div>
-              <h1 className="text-4xl font-black tracking-tight text-black">SimpleBank</h1>
+              <h1 className="text-4xl font-black tracking-tight text-black">PiggyBank</h1>
               <p className="text-sm font-bold text-black/70">Lisk Sepolia Banking Platform</p>
             </div>
           </motion.div>

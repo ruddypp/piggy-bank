@@ -38,7 +38,7 @@ export function DashboardFooter() {
               <div className="bg-[#f9dc5c] rounded-[15px] p-2 border-2 border-[#f9dc5c]">
                 <Wallet className="w-6 h-6 text-black" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-black text-[#f9dc5c]">SimpleBank</h3>
+              <h3 className="text-2xl font-black text-[#f9dc5c]">PiggyBank</h3>
             </div>
             <p className="text-[#f9dc5c]/80 font-bold mb-4">
               Your Retro ETH Banking Platform on Lisk Sepolia Testnet

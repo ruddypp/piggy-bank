@@ -37,7 +37,7 @@ export function LandingFooter() {
               <div className="bg-[#f9dc5c] rounded-[15px] p-2 border-2 border-[#f9dc5c]">
                 <Wallet className="w-6 h-6 text-black" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-black text-[#f9dc5c]">SimpleBank</h3>
+              <h3 className="text-2xl font-black text-[#f9dc5c]">PiggyBank</h3>
             </div>
             <p className="text-[#f9dc5c]/80 font-bold mb-4">
               Your Retro ETH Banking Platform on Lisk Sepolia Testnet
@@ -147,7 +147,7 @@ export function LandingFooter() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <p className="text-[#f9dc5c]/60 font-bold text-sm">
-            © {currentYear} SimpleBank. All rights reserved.
+            © {currentYear} PiggyBank. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm">
             <motion.a
