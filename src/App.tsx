@@ -8,6 +8,10 @@ import { DepositCard } from './components/DepositCard';
 import { WithdrawCard } from './components/WithdrawCard';
 import { TransferCard } from './components/TransferCard';
 import { BalanceCard } from './components/BalanceCard';
+import { LendCard } from './components/LendCard';
+import { BorrowCard } from './components/BorrowCard';
+import { SidebarMenu } from './components/SidebarMenu';
+import { FallingPigsBackground } from './components/FallingPigsBackground';
 import { Toaster } from 'sonner';
 import './App.css';
 
@@ -52,6 +56,10 @@ function App() {
         return <TransferCard />;
       case 'balance':
         return <BalanceCard />;
+      case 'lend':
+        return <LendCard />;
+      case 'borrow':
+        return <BorrowCard />;
       default:
         return <DepositCard />;
     }
@@ -92,38 +100,11 @@ function App() {
         }}
       />
       
-      {/* Subtle Animated Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className="absolute top-20 right-10 w-64 h-64 bg-yellow-300 rounded-full opacity-5 blur-3xl"
-          animate={{
-            x: [0, -50, 0],
-            y: [0, 30, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-20 left-10 w-80 h-80 bg-yellow-400 rounded-full opacity-5 blur-3xl"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      </div>
+      {/* Animated Falling Pigs Background */}
+      <FallingPigsBackground />
 
       <div className="relative z-10">
-        <div className="container mx-auto px-4 md:px-6 py-8 max-w-6xl">
+        <div className="container mx-auto px-4 md:px-6 py-8 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -131,26 +112,36 @@ function App() {
           >
             <Header />
           </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <TabMenu activeTab={activeTab} onTabChange={setActiveTab} />
-          </motion.div>
-          
-          <AnimatePresence mode="wait">
-            <motion.main
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              {renderCard()}
-            </motion.main>
-          </AnimatePresence>
+
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-[auto,1fr] gap-6">
+            {/* Sidebar for desktop */}
+            <SidebarMenu activeTab={activeTab} onTabChange={setActiveTab} />
+
+            {/* Content area */}
+            <div>
+              {/* Mobile Tabs */}
+              <motion.div
+                className="lg:hidden"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <TabMenu activeTab={activeTab} onTabChange={setActiveTab} />
+              </motion.div>
+
+              <AnimatePresence mode="wait">
+                <motion.main
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {renderCard()}
+                </motion.main>
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
 
         {/* Footer */}

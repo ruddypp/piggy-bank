@@ -9,6 +9,8 @@ export function LandingFooter() {
       { name: 'Features', href: '#features' },
       { name: 'Benefits', href: '#benefits' },
       { name: 'Dashboard', href: '#app' },
+      { name: 'Lend Liquidity', href: '#features' },
+      { name: 'Borrow with Collateral', href: '#features' },
     ],
     resources: [
       { name: 'Documentation', href: '#' },

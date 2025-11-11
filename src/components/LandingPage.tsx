@@ -83,6 +83,20 @@ export function LandingPage() {
       color: 'from-yellow-400 to-yellow-600',
       delay: 0.4,
     },
+    {
+      icon: PiggyBank,
+      title: 'Lend Liquidity',
+      description: 'Provide ETH liquidity and earn interest from the lending pool',
+      color: 'from-pink-400 to-rose-600',
+      delay: 0.5,
+    },
+    {
+      icon: Banknote,
+      title: 'Borrow with Collateral',
+      description: 'Deposit ETH as collateral to borrow safely using set ratios',
+      color: 'from-orange-400 to-red-600',
+      delay: 0.6,
+    },
   ];
 
   const benefits = [
@@ -412,6 +426,63 @@ export function LandingPage() {
                 </motion.div>
               );
             })}
+          </div>
+        </motion.section>
+
+        {/* Lending & Borrowing Spotlight */}
+        <motion.section
+          className="container mx-auto px-4 md:px-6 py-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <motion.div
+              className="bg-white rounded-[25px] p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="bg-gradient-to-br from-pink-400 to-rose-600 rounded-[16px] p-3 border-2 border-black">
+                  <PiggyBank className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-3xl font-black">Lend Liquidity</h3>
+              </div>
+              <p className="text-black/70 font-bold mb-4">
+                Supply ETH to earn interest. Withdraw anytime. Rates adjust by pool usage.
+              </p>
+              <ul className="list-disc pl-6 font-bold text-black/80 space-y-1">
+                <li>Instant lend and withdraw</li>
+                <li>Transparent interest rate</li>
+                <li>Fully on-chain</li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              className="bg-white rounded-[25px] p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="bg-gradient-to-br from-orange-400 to-red-600 rounded-[16px] p-3 border-2 border-black">
+                  <Banknote className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-3xl font-black">Borrow with Collateral</h3>
+              </div>
+              <p className="text-black/70 font-bold mb-4">
+                Deposit ETH as collateral to unlock borrowing power using a set collateral ratio.
+              </p>
+              <ul className="list-disc pl-6 font-bold text-black/80 space-y-1">
+                <li>Clear collateral ratio</li>
+                <li>Borrow and repay any time</li>
+                <li>Simple, predictable mechanics</li>
+              </ul>
+            </motion.div>
           </div>
         </motion.section>
 
