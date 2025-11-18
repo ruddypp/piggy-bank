@@ -92,22 +92,27 @@ export function TransferCard() {
         </div>
 
         <div>
-          <label className="block text-2xl font-black mb-3">Recipient Address</label>
-          <input
-            type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="0x..."
-            disabled={isLoading || transferSuccess}
-            className="w-full px-6 py-4 text-lg font-bold border-4 border-black rounded-[20px] focus:outline-none focus:ring-4 focus:ring-[#f9dc5c] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50"
-          />
-          {address && ethers.isAddress(address) && (
-            <p className="text-sm font-bold mt-2 text-green-600">Valid address ✓</p>
-          )}
-          {address && typeof address === 'string' && address.trim().length > 0 && !ethers.isAddress(address) && (
-            <p className="text-sm font-bold mt-2 text-red-600">Invalid address ✗</p>
-          )}
-        </div>
+  <label className="block text-2xl font-black mb-3">Recipient Address</label>
+
+  <input
+    type="text"
+    value={address}
+    onChange={(e) => setAddress(e.target.value)}
+    placeholder="0x..."
+    disabled={isLoading || transferSuccess}
+    className="w-full px-6 py-4 text-lg font-bold border-4 border-black rounded-[20px] focus:outline-none focus:ring-4 focus:ring-[#f9dc5c] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50"
+  />
+
+  {/* Validasi hanya muncul jika user sudah mengetik minimal 1 char */}
+  {address.trim().length > 0 && (
+    ethers.isAddress(address) ? (
+      <p className="text-sm font-bold mt-2 text-green-600">Valid address ✓</p>
+    ) : (
+      <p className="text-sm font-bold mt-2 text-red-600">Invalid address ✗</p>
+    )
+  )}
+</div>
+
 
         <div>
           <label className="block text-2xl font-black mb-3">Amount to Transfer</label>
