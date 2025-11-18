@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { Card } from './Card';
 import { Send, Shield, Clock, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { useSimpleBank } from '../hooks/useSimpleBank';
+import { usePiggyBank } from '../hooks/usePiggyBank';
 import { useWallet } from '../hooks/useWallet';
 import { ethers } from 'ethers';
 
 export function TransferCard() {
   const [amount, setAmount] = useState('');
   const [address, setAddress] = useState('');
-  const { transfer, isLoading } = useSimpleBank();
+  const { transfer, isLoading } = usePiggyBank();
   const { isConnected } = useWallet();
   const [transferSuccess, setTransferSuccess] = useState(false);
 
@@ -58,7 +58,7 @@ export function TransferCard() {
       setTransferSuccess(false);
     }, 2000);
     } catch (error) {
-      // Error is already handled in useSimpleBank hook
+      // Error is already handled in usePiggyBank hook
       console.error('Transfer error:', error);
     }
   };
@@ -98,7 +98,7 @@ export function TransferCard() {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder="0x..."
-            disabled={isLoading || transferSuccess || !isConnected}
+            disabled={isLoading || transferSuccess}
             className="w-full px-6 py-4 text-lg font-bold border-4 border-black rounded-[20px] focus:outline-none focus:ring-4 focus:ring-[#f9dc5c] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50"
           />
           {address && ethers.isAddress(address) && (
@@ -118,7 +118,7 @@ export function TransferCard() {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
-              disabled={isLoading || transferSuccess || !isConnected}
+              disabled={isLoading || transferSuccess}
               className="w-full px-6 py-5 text-3xl font-black border-4 border-black rounded-[20px] focus:outline-none focus:ring-4 focus:ring-[#f9dc5c] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50"
             />
             <span className="absolute right-6 top-1/2 -translate-y-1/2 text-2xl font-black">ETH</span>
@@ -144,7 +144,7 @@ export function TransferCard() {
 
         <button
           onClick={handleTransfer}
-          disabled={isLoading || transferSuccess || !isConnected}
+          disabled={isLoading || transferSuccess}
           className={`w-full text-black font-black text-2xl py-6 px-8 rounded-[25px] border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 flex items-center justify-center gap-3 ${
             transferSuccess
               ? 'bg-green-400 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'

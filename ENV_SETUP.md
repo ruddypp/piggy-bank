@@ -17,6 +17,7 @@ VITE_BLOCK_EXPLORER_URL=https://sepolia-blockscout.lisk.com
 ## Catatan:
 
 - Semua variabel environment di Vite harus diawali dengan `VITE_` agar bisa diakses di frontend
+- Aplikasi juga akan memeriksa alias `VITE_PIGGY_ADDRESS`, `VITE_PIGGYBANK_ADDRESS`, dan `VITE_PIGGY_BANK_ADDRESS` bila Anda belum memigrasikan nama variabelnya
 - File `.env` sudah di-ignore oleh git untuk keamanan
 - Pastikan contract address yang Anda masukkan sudah benar dan sudah di-deploy di Lisk Sepolia Testnet (Chain ID: 4202)
 

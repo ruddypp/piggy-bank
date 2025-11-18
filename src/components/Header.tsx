@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import { Wallet, LogOut, RefreshCw, Copy, Check } from 'lucide-react';
 import { useWallet } from '../hooks/useWallet';
-import { useSimpleBank } from '../hooks/useSimpleBank';
+import { usePiggyBank } from '../hooks/usePiggyBank';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 
 export function Header() {
   const { address, isConnected, isLoading, connectWallet, disconnectWallet } = useWallet();
-  const { getContractBalance } = useSimpleBank();
+  const { getContractBalance } = usePiggyBank();
   const [contractBalance, setContractBalance] = useState<string | null>(null);
   const [isLoadingBalance, setIsLoadingBalance] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -18,7 +18,7 @@ export function Header() {
       if (isConnected && address) {
         setIsLoadingBalance(true);
         try {
-          const balance = await getContractBalance(address);
+          const balance = await getContractBalance();
           setContractBalance(balance);
         } catch (error) {
           console.error('Failed to load contract balance:', error);
@@ -40,7 +40,7 @@ export function Header() {
       if (isConnected && address) {
         setIsLoadingBalance(true);
         try {
-          const balance = await getContractBalance(address);
+          const balance = await getContractBalance();
           setContractBalance(balance);
         } catch (error) {
           console.error('Failed to refresh contract balance:', error);
@@ -60,7 +60,7 @@ export function Header() {
     if (!address) return;
     setIsLoadingBalance(true);
     try {
-      const balance = await getContractBalance(address);
+      const balance = await getContractBalance();
       setContractBalance(balance);
       toast.success('Balance updated!', {
         style: {

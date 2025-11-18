@@ -43,15 +43,15 @@ export function LandingPage() {
     },
   };
 
+  const goToBankDashboard = () => {
+    window.location.href = '/bank';
+  };
+
   const handleGetStarted = async () => {
     if (!isConnected) {
       await connectWallet();
     }
-    // Navigate to app after connecting
-    setTimeout(() => {
-      window.location.hash = '#app';
-      window.location.reload();
-    }, 1000);
+    setTimeout(goToBankDashboard, 1000);
   };
 
   const features = [
@@ -82,20 +82,6 @@ export function LandingPage() {
       description: 'View your account balance and transaction history in real-time',
       color: 'from-yellow-400 to-yellow-600',
       delay: 0.4,
-    },
-    {
-      icon: PiggyBank,
-      title: 'Lend Liquidity',
-      description: 'Provide ETH liquidity and earn interest from the lending pool',
-      color: 'from-pink-400 to-rose-600',
-      delay: 0.5,
-    },
-    {
-      icon: Banknote,
-      title: 'Borrow with Collateral',
-      description: 'Deposit ETH as collateral to borrow safely using set ratios',
-      color: 'from-orange-400 to-red-600',
-      delay: 0.6,
     },
   ];
 
@@ -230,10 +216,7 @@ export function LandingPage() {
                 </motion.button>
 
                 <motion.button
-                  onClick={() => {
-                    window.location.hash = '#app';
-                    window.location.reload();
-                  }}
+                  onClick={goToBankDashboard}
                   className="bg-white text-black font-black text-xl px-10 py-5 rounded-[25px] border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 flex items-center justify-center gap-3"
                   whileHover={{ scale: 1.05, y: -5 }}
                   whileTap={{ scale: 0.95 }}
@@ -429,7 +412,7 @@ export function LandingPage() {
           </div>
         </motion.section>
 
-        {/* Lending & Borrowing Spotlight */}
+        {/* Upcoming Features
         <motion.section
           className="container mx-auto px-4 md:px-6 py-12"
           initial={{ opacity: 0 }}
@@ -437,54 +420,30 @@ export function LandingPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <motion.div
-              className="bg-white rounded-[25px] p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
-              initial={{ y: 40, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="bg-gradient-to-br from-pink-400 to-rose-600 rounded-[16px] p-3 border-2 border-black">
-                  <PiggyBank className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-3xl font-black">Lend Liquidity</h3>
+          <motion.div
+            className="bg-white rounded-[25px] p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] max-w-5xl mx-auto text-center"
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
+            <div className="flex flex-col items-center gap-3 mb-3">
+              <div className="bg-gradient-to-br from-pink-400 to-orange-500 rounded-[20px] p-4 border-2 border-black">
+                <PiggyBank className="w-10 h-10 text-white" />
               </div>
-              <p className="text-black/70 font-bold mb-4">
-                Supply ETH to earn interest. Withdraw anytime. Rates adjust by pool usage.
-              </p>
-              <ul className="list-disc pl-6 font-bold text-black/80 space-y-1">
-                <li>Instant lend and withdraw</li>
-                <li>Transparent interest rate</li>
-                <li>Fully on-chain</li>
-              </ul>
-            </motion.div>
-
-            <motion.div
-              className="bg-white rounded-[25px] p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
-              initial={{ y: 40, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="bg-gradient-to-br from-orange-400 to-red-600 rounded-[16px] p-3 border-2 border-black">
-                  <Banknote className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-3xl font-black">Borrow with Collateral</h3>
-              </div>
-              <p className="text-black/70 font-bold mb-4">
-                Deposit ETH as collateral to unlock borrowing power using a set collateral ratio.
-              </p>
-              <ul className="list-disc pl-6 font-bold text-black/80 space-y-1">
-                <li>Clear collateral ratio</li>
-                <li>Borrow and repay any time</li>
-                <li>Simple, predictable mechanics</li>
-              </ul>
-            </motion.div>
-          </div>
-        </motion.section>
+              <h3 className="text-3xl font-black">Lending & Borrowing are getting an upgrade</h3>
+            </div>
+            <p className="text-black/70 font-bold mb-4">
+              We just redeployed the PiggyBank contract and are rebuilding the dedicated lending / borrowing experience.
+              These tabs are temporarily disabled in the dashboard while we plug in the new on-chain logic.
+            </p>
+            <ul className="list-none font-bold text-black/80 space-y-2">
+              <li>• Core banking (deposit, withdraw, transfer, balance) is live on the new address.</li>
+              <li>• Lending & borrowing will return once the specialized contracts are finalized.</li>
+              <li>• Follow our updates to know when the liquidity pools reopen.</li>
+            </ul>
+          </motion.div>
+        </motion.section> */}
 
         {/* Benefits Section */}
         <motion.section

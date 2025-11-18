@@ -15,7 +15,7 @@ interface PigSpec {
 export function FallingPigsBackground() {
   const pigs: PigSpec[] = useMemo(() => {
     const arr: PigSpec[] = [];
-    const count = 70;
+    const count = 10;
     for (let i = 0; i < count; i++) {
       const left = `${Math.floor(Math.random() * 92) + 4}%`;
       const size = Math.floor(Math.random() * 42) + 28; // 28-70px

@@ -2,33 +2,25 @@ import { useState, useEffect } from 'react';
 import { Card } from './Card';
 import { ArrowUpCircle, AlertCircle, CheckCircle2, TrendingUp } from 'lucide-react';
 import { toast } from 'sonner';
-import { useSimpleBank } from '../hooks/useSimpleBank';
+import { usePiggyBank } from '../hooks/usePiggyBank';
 import { useWallet } from '../hooks/useWallet';
 
 export function WithdrawCard() {
   const [amount, setAmount] = useState('');
   const [balance, setBalance] = useState<string>('0.0000');
-  const { withdraw, isLoading, getContractBalance } = useSimpleBank();
-  const { isConnected, address } = useWallet();
+  const { withdraw, isLoading, getMyBalance } = usePiggyBank();
+  const { isConnected } = useWallet();
   const [withdrawSuccess, setWithdrawSuccess] = useState(false);
 
-  const fee = amount ? (parseFloat(amount) * 0.0015).toFixed(4) : '0.0000';
-  const netAmount = amount ? (parseFloat(amount) - parseFloat(fee)).toFixed(4) : '0.0000';
-
-  // Load balance when connected
   useEffect(() => {
     const loadBalance = async () => {
-      if (isConnected && address) {
-        try {
-          const contractBalance = await getContractBalance(address);
-          setBalance(contractBalance);
-        } catch (error) {
-          console.error('Failed to load balance:', error);
-        }
+      if (isConnected) {
+        const balance = await getMyBalance();
+        setBalance(balance);
       }
     };
     loadBalance();
-  }, [isConnected, address, getContractBalance]);
+  }, [isConnected, getMyBalance]);
 
   const handleWithdraw = async () => {
     if (!isConnected) {
@@ -64,19 +56,14 @@ export function WithdrawCard() {
     try {
       await withdraw(amount);
     setWithdrawSuccess(true);
-      // Refresh balance after withdrawal
-      if (address) {
-        const newBalance = await getContractBalance(address);
-        setBalance(newBalance);
-      }
-      // Trigger balance refresh event for Header
-      window.dispatchEvent(new Event('balance-refresh'));
+    // Trigger balance refresh event for Header
+    window.dispatchEvent(new Event('balance-refresh'));
     setTimeout(() => {
       setAmount('');
       setWithdrawSuccess(false);
     }, 2000);
     } catch (error) {
-      // Error is already handled in useSimpleBank hook
+      // Error is already handled in usePiggyBank hook
       console.error('Withdraw error:', error);
     }
   };
@@ -101,7 +88,7 @@ export function WithdrawCard() {
           </div>
           <div className="bg-gradient-to-br from-orange-50 to-amber-50 border-3 border-black rounded-[20px] p-4">
             <p className="text-sm font-bold text-gray-600">Withdrawal Fee</p>
-            <p className="text-2xl font-black mt-2">{fee} ETH</p>
+            <p className="text-2xl font-black mt-2">{amount} ETH</p>
           </div>
         </div>
 
@@ -119,7 +106,7 @@ export function WithdrawCard() {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
-              disabled={isLoading || withdrawSuccess || !isConnected}
+              disabled={isLoading || withdrawSuccess}
               max={balance}
               className="w-full px-6 py-5 text-3xl font-black border-4 border-black rounded-[20px] focus:outline-none focus:ring-4 focus:ring-[#f9dc5c] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50"
             />
@@ -135,18 +122,18 @@ export function WithdrawCard() {
             </div>
             <div className="border-t-2 border-black pt-3 flex justify-between items-center text-lg font-bold">
               <span>Withdrawal Fee:</span>
-              <span>-{fee} ETH</span>
+              <span>-{amount} ETH</span>
             </div>
             <div className="bg-black text-[#f9dc5c] px-4 py-3 rounded-[15px] flex justify-between items-center text-xl font-black">
               <span>You'll Receive:</span>
-              <span>{netAmount} ETH</span>
+              <span>{amount} ETH</span>
             </div>
           </div>
         )}
 
         <button
           onClick={handleWithdraw}
-          disabled={isLoading || withdrawSuccess || !isConnected}
+          disabled={isLoading || withdrawSuccess}
           className={`w-full text-black font-black text-2xl py-6 px-8 rounded-[25px] border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 flex items-center justify-center gap-3 ${
             withdrawSuccess
               ? 'bg-green-400 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'

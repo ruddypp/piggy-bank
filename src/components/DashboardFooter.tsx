@@ -10,8 +10,6 @@ export function DashboardFooter() {
       { name: 'Withdraw', href: '#withdraw' },
       { name: 'Transfer', href: '#transfer' },
       { name: 'Balance', href: '#balance' },
-      { name: 'Lend', href: '#lend' },
-      { name: 'Borrow', href: '#borrow' },
     ],
     resources: [
       { name: 'Documentation', href: '#' },
@@ -26,20 +24,10 @@ export function DashboardFooter() {
   };
 
   return (
-    <footer className="bg-black text-[#f9dc5c] border-t-4 border-[#f9dc5c] mt-12">
-      <div className="container mx-auto px-6 py-12">
-        <div className="mb-6">
-          <motion.div
-            className="bg-[#f9dc5c] text-black font-black px-4 py-2 rounded-[12px] inline-flex items-center gap-2 border-2 border-[#f9dc5c] shadow-[4px_4px_0px_0px_rgba(249,220,92,0.3)]"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <span className="text-xs bg-black text-[#f9dc5c] px-2 py-0.5 rounded-full">NEW</span>
-            <span>Lending & Borrowing now available</span>
-          </motion.div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+    <footer className="bg-black text-[#f9dc5c] border-t-4 border-[#f9dc5c] mt-8">
+      <div className="container mx-auto px-6 py-8">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {/* Brand */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -136,8 +124,7 @@ export function DashboardFooter() {
             <h4 className="text-xl font-black mb-4 text-[#f9dc5c]">Navigation</h4>
             <motion.button
               onClick={() => {
-                window.location.hash = '';
-                window.location.reload();
+                window.location.href = '/';
               }}
               className="bg-[#f9dc5c] text-black font-black px-6 py-3 rounded-[15px] border-3 border-[#f9dc5c] shadow-[4px_4px_0px_0px_rgba(249,220,92,0.3)] hover:shadow-[6px_6px_0px_0px_rgba(249,220,92,0.3)] transition-all duration-200 flex items-center gap-2 group mb-4"
               whileHover={{ scale: 1.05, y: -2 }}

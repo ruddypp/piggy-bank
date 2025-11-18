@@ -8,9 +8,8 @@ export function LandingFooter() {
     product: [
       { name: 'Features', href: '#features' },
       { name: 'Benefits', href: '#benefits' },
-      { name: 'Dashboard', href: '#app' },
-      { name: 'Lend Liquidity', href: '#features' },
-      { name: 'Borrow with Collateral', href: '#features' },
+      { name: 'Dashboard', href: '/bank' },
+      { name: 'Roadmap', href: '#features' },
     ],
     resources: [
       { name: 'Documentation', href: '#' },
@@ -25,9 +24,9 @@ export function LandingFooter() {
   };
 
   return (
-    <footer className="bg-black text-[#f9dc5c] border-t-4 border-[#f9dc5c] mt-20">
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+    <footer className="bg-black text-[#f9dc5c] border-t-4 border-[#f9dc5c] mt-16">
+      <div className="container mx-auto px-6 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {/* Brand */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -127,8 +126,7 @@ export function LandingFooter() {
             </p>
             <motion.button
               onClick={() => {
-                window.location.hash = '#app';
-                window.location.reload();
+                window.location.href = '/bank';
               }}
               className="bg-[#f9dc5c] text-black font-black px-6 py-3 rounded-[15px] border-3 border-[#f9dc5c] shadow-[4px_4px_0px_0px_rgba(249,220,92,0.3)] hover:shadow-[6px_6px_0px_0px_rgba(249,220,92,0.3)] transition-all duration-200 flex items-center gap-2 group"
               whileHover={{ scale: 1.05, y: -2 }}

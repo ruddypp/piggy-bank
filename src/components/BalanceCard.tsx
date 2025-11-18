@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card } from './Card';
 import { Wallet, Eye, EyeOff, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
-import { useSimpleBank } from '../hooks/useSimpleBank';
+import { usePiggyBank } from '../hooks/usePiggyBank';
 import { useWallet } from '../hooks/useWallet';
 import { ethers } from 'ethers';
 
@@ -11,7 +11,7 @@ export function BalanceCard() {
   const [balance, setBalance] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showBalance, setShowBalance] = useState(false);
-  const { getContractBalance } = useSimpleBank();
+  const { getBalance } = usePiggyBank();
   const { isConnected, address: walletAddress } = useWallet();
 
   // Auto-fill address if wallet is connected
@@ -34,7 +34,7 @@ export function BalanceCard() {
 
     setIsLoading(true);
     try {
-      const contractBalance = await getContractBalance(address);
+      const contractBalance = await getBalance(address);
       setBalance(contractBalance);
       setShowBalance(true);
       toast.success('Balance retrieved!', {
@@ -59,7 +59,7 @@ export function BalanceCard() {
     if (!address || !ethers.isAddress(address)) return;
     setIsLoading(true);
     try {
-      const contractBalance = await getContractBalance(address);
+      const contractBalance = await getBalance(address);
       setBalance(contractBalance);
       toast.success('Balance updated!', {
         style: {

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowDownCircle, ArrowUpCircle, Send, Wallet, PiggyBank, Banknote } from 'lucide-react';
+import { ArrowDownCircle, ArrowUpCircle, Send, Wallet } from 'lucide-react';
 
 interface SidebarMenuProps {
   activeTab: string;
@@ -11,8 +11,6 @@ const tabs = [
   { id: 'withdraw', label: 'Withdraw', icon: ArrowUpCircle },
   { id: 'transfer', label: 'Transfer', icon: Send },
   { id: 'balance', label: 'Balance', icon: Wallet },
-  { id: 'lend', label: 'Lend', icon: PiggyBank },
-  { id: 'borrow', label: 'Borrow', icon: Banknote },
 ];
 
 export function SidebarMenu({ activeTab, onTabChange }: SidebarMenuProps) {

@@ -10,8 +10,6 @@ const tabs = [
   { id: 'withdraw', label: 'Withdraw' },
   { id: 'transfer', label: 'Transfer' },
   { id: 'balance', label: 'Balance' },
-  { id: 'lend', label: 'Lend' },
-  { id: 'borrow', label: 'Borrow' },
 ];
 
 export function TabMenu({ activeTab, onTabChange }: TabMenuProps) {

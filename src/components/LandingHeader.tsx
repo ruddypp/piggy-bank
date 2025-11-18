@@ -6,6 +6,9 @@ import { useWallet } from '../hooks/useWallet';
 export function LandingHeader() {
   const { isConnected, connectWallet } = useWallet();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const goToBank = () => {
+    window.location.href = '/bank';
+  };
 
   return (
     <motion.header
@@ -47,8 +50,7 @@ export function LandingHeader() {
             <motion.button
               onClick={() => {
                 if (isConnected) {
-                  window.location.hash = '#app';
-                  window.location.reload();
+                  goToBank();
                 } else {
                   connectWallet();
                 }
@@ -103,8 +105,7 @@ export function LandingHeader() {
             <motion.button
               onClick={() => {
                 if (isConnected) {
-                  window.location.hash = '#app';
-                  window.location.reload();
+                  goToBank();
                 } else {
                   connectWallet();
                 }
