@@ -1,14 +1,11 @@
 import { motion } from 'framer-motion';
-import { Wallet, Menu, X } from 'lucide-react';
+import { Wallet, Menu, X, Building2, LayoutDashboard } from 'lucide-react';
 import { useState } from 'react';
 import { useWallet } from '../hooks/useWallet';
 
 export function LandingHeader() {
   const { isConnected, connectWallet } = useWallet();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const goToBank = () => {
-    window.location.href = '/bank';
-  };
 
   return (
     <motion.header
@@ -32,7 +29,7 @@ export function LandingHeader() {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-4">
             <motion.a
               href="#features"
               className="text-black font-black text-lg hover:underline"
@@ -47,20 +44,35 @@ export function LandingHeader() {
             >
               Benefits
             </motion.a>
-            <motion.button
-              onClick={() => {
-                if (isConnected) {
-                  goToBank();
-                } else {
-                  connectWallet();
-                }
-              }}
-              className="bg-black text-[#f9dc5c] font-black text-lg px-6 py-3 rounded-[15px] border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
-              whileHover={{ scale: 1.05, y: -2 }}
+            <motion.a
+              href="/bank"
+              className="bg-blue-400 text-black font-black text-base px-5 py-2.5 rounded-[15px] border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 flex items-center gap-2 hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]"
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {isConnected ? 'Dashboard' : 'Connect Wallet'}
-            </motion.button>
+              <Building2 className="w-4 h-4" strokeWidth={3} />
+              Bank
+            </motion.a>
+            <motion.a
+              href="/dashboard"
+              className="bg-purple-400 text-black font-black text-base px-5 py-2.5 rounded-[15px] border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 flex items-center gap-2 hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <LayoutDashboard className="w-4 h-4" strokeWidth={3} />
+              Dashboard
+            </motion.a>
+            {!isConnected && (
+              <motion.button
+                onClick={connectWallet}
+                className="bg-black text-[#f9dc5c] font-black text-base px-6 py-2.5 rounded-[15px] border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 flex items-center gap-2"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Wallet className="w-4 h-4" strokeWidth={3} />
+                Connect
+              </motion.button>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -102,20 +114,37 @@ export function LandingHeader() {
             >
               Benefits
             </motion.a>
-            <motion.button
-              onClick={() => {
-                if (isConnected) {
-                  goToBank();
-                } else {
-                  connectWallet();
-                }
-                setIsMenuOpen(false);
-              }}
-              className="w-full bg-black text-[#f9dc5c] font-black text-lg px-6 py-3 rounded-[15px] border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            <motion.a
+              href="/bank"
+              className="w-full bg-blue-400 text-black font-black text-base px-5 py-2.5 rounded-[15px] border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center gap-2"
               whileTap={{ scale: 0.95 }}
+              onClick={() => setIsMenuOpen(false)}
             >
-              {isConnected ? 'Dashboard' : 'Connect Wallet'}
-            </motion.button>
+              <Building2 className="w-4 h-4" strokeWidth={3} />
+              Bank
+            </motion.a>
+            <motion.a
+              href="/dashboard"
+              className="w-full bg-purple-400 text-black font-black text-base px-5 py-2.5 rounded-[15px] border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center gap-2"
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <LayoutDashboard className="w-4 h-4" strokeWidth={3} />
+              Dashboard
+            </motion.a>
+            {!isConnected && (
+              <motion.button
+                onClick={() => {
+                  connectWallet();
+                  setIsMenuOpen(false);
+                }}
+                className="w-full bg-black text-[#f9dc5c] font-black text-base px-6 py-2.5 rounded-[15px] border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center gap-2"
+                whileTap={{ scale: 0.95 }}
+              >
+                <Wallet className="w-4 h-4" strokeWidth={3} />
+                Connect Wallet
+              </motion.button>
+            )}
           </motion.div>
         )}
       </div>

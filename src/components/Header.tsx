@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Wallet, LogOut, RefreshCw, Copy, Check } from 'lucide-react';
+import { Wallet, LogOut, RefreshCw, Copy, Check, LayoutDashboard, Building2 } from 'lucide-react';
 import { useWallet } from '../hooks/useWallet';
 import { usePiggyBank } from '../hooks/usePiggyBank';
 import { useState, useEffect } from 'react';
@@ -225,12 +225,41 @@ export function Header() {
           </motion.div>
         </div>
 
+        {/* Navigation Section */}
+        <motion.div
+          className="flex items-center justify-between gap-3 mb-4 flex-wrap"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <div className="flex items-center gap-3">
+            <motion.a
+              href="/bank"
+              className="bg-blue-400 text-black font-black text-sm px-4 py-2 rounded-[15px] border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 flex items-center gap-2 hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Building2 className="w-4 h-4" strokeWidth={3} />
+              Bank
+            </motion.a>
+            <motion.a
+              href="/dashboard"
+              className="bg-purple-400 text-black font-black text-sm px-4 py-2 rounded-[15px] border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 flex items-center gap-2 hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <LayoutDashboard className="w-4 h-4" strokeWidth={3} />
+              Dashboard
+            </motion.a>
+          </div>
+        </motion.div>
+
         {/* Bottom Section - Status Bar */}
         <motion.div
           className="flex items-center justify-between bg-black/10 rounded-[15px] px-4 py-2 border-2 border-black/20 flex-wrap gap-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
         >
           <div className="flex items-center gap-2">
             <motion.div

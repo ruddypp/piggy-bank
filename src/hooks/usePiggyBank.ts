@@ -19,6 +19,10 @@ interface UsePiggyBankReturn {
   getMyBalance: () => Promise<string>;
   getTotalDeposits: () => Promise<string>;
   withdrawAll: () => Promise<any>;
+  pause: () => Promise<any>;
+  unpause: () => Promise<any>;
+  getOwner: () => Promise<string>;
+  getPaused: () => Promise<boolean>;
   isLoading: boolean;
   error: string | null;
 }
@@ -102,15 +106,32 @@ export function usePiggyBank(): UsePiggyBankReturn {
       const amountWei = ethers.parseEther(amount);
 
       const tx = await contract.deposit({ value: amountWei });
-      toast.loading('Transaction pending...', { id: 'deposit-tx' });
+      toast.loading('Transaction pending...', { 
+        id: 'deposit-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       const receipt = await tx.wait();
 
-      toast.success(`Deposited ${amount} ETH successfully!`, { id: 'deposit-tx' });
+      toast.success(`Deposited ${amount} ETH successfully!`, { 
+        id: 'deposit-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       return receipt;
     } catch (err: any) {
       const msg = safeErrorMessage(err);
       setError(msg);
-      toast.error(`Deposit failed: ${msg}`);
+      toast.error(`Deposit failed: ${msg}`, {
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       throw err;
     } finally {
       setIsLoading(false);
@@ -134,15 +155,32 @@ export function usePiggyBank(): UsePiggyBankReturn {
       const amountWei = ethers.parseEther(amount);
 
       const tx = await contract.withdraw(amountWei);
-      toast.loading('Transaction pending...', { id: 'withdraw-tx' });
+      toast.loading('Transaction pending...', { 
+        id: 'withdraw-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       const receipt = await tx.wait();
 
-      toast.success(`Withdrew ${amount} ETH successfully!`, { id: 'withdraw-tx' });
+      toast.success(`Withdrew ${amount} ETH successfully!`, { 
+        id: 'withdraw-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       return receipt;
     } catch (err: any) {
       const msg = safeErrorMessage(err);
       setError(msg);
-      toast.error(`Withdraw failed: ${msg}`);
+      toast.error(`Withdraw failed: ${msg}`, {
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       throw err;
     } finally {
       setIsLoading(false);
@@ -169,15 +207,32 @@ export function usePiggyBank(): UsePiggyBankReturn {
       const amountWei = ethers.parseEther(amount);
 
       const tx = await contract.transfer(to, amountWei);
-      toast.loading('Transaction pending...', { id: 'transfer-tx' });
+      toast.loading('Transaction pending...', { 
+        id: 'transfer-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       const receipt = await tx.wait();
 
-      toast.success(`Transferred ${amount} ETH successfully!`, { id: 'transfer-tx' });
+      toast.success(`Transferred ${amount} ETH successfully!`, { 
+        id: 'transfer-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       return receipt;
     } catch (err: any) {
       const msg = safeErrorMessage(err);
       setError(msg);
-      toast.error(`Transfer failed: ${msg}`);
+      toast.error(`Transfer failed: ${msg}`, {
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       throw err;
     } finally {
       setIsLoading(false);
@@ -194,14 +249,113 @@ export function usePiggyBank(): UsePiggyBankReturn {
       await switchNetwork();
       const contract = await getContract();
       const tx = await contract.withdrawAll();
-      toast.loading('Transaction pending...', { id: 'withdraw-all-tx' });
+      toast.loading('Transaction pending...', { 
+        id: 'withdraw-all-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       const receipt = await tx.wait();
-      toast.success('Withdrew all funds successfully!', { id: 'withdraw-all-tx' });
+      toast.success('Withdrew all funds successfully!', { 
+        id: 'withdraw-all-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       return receipt;
     } catch (err: any) {
       const msg = safeErrorMessage(err);
       setError(msg);
-      toast.error(`Withdraw all failed: ${msg}`);
+      toast.error(`Withdraw all failed: ${msg}`, {
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const pause = useCallback(async () => {
+    if (!PIGGY_ADDRESS) {
+      throw new Error('Contract address not configured');
+    }
+    setIsLoading(true);
+    setError(null);
+    try {
+      await switchNetwork();
+      const contract = await getContract();
+      const tx = await contract.pause();
+      toast.loading('Transaction pending...', { 
+        id: 'pause-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
+      const receipt = await tx.wait();
+      toast.success('Contract paused successfully!', { 
+        id: 'pause-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
+      return receipt;
+    } catch (err: any) {
+      const msg = safeErrorMessage(err);
+      setError(msg);
+      toast.error(`Pause failed: ${msg}`, {
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const unpause = useCallback(async () => {
+    if (!PIGGY_ADDRESS) {
+      throw new Error('Contract address not configured');
+    }
+    setIsLoading(true);
+    setError(null);
+    try {
+      await switchNetwork();
+      const contract = await getContract();
+      const tx = await contract.unpause();
+      toast.loading('Transaction pending...', { 
+        id: 'unpause-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
+      const receipt = await tx.wait();
+      toast.success('Contract unpaused successfully!', { 
+        id: 'unpause-tx',
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
+      return receipt;
+    } catch (err: any) {
+      const msg = safeErrorMessage(err);
+      setError(msg);
+      toast.error(`Unpause failed: ${msg}`, {
+        style: {
+          border: '3px solid black',
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+        },
+      });
       throw err;
     } finally {
       setIsLoading(false);
@@ -244,6 +398,20 @@ export function usePiggyBank(): UsePiggyBankReturn {
     return parseFloat(ethers.formatEther(balance)).toFixed(4);
   }, []);
 
+  const getOwner = useCallback(async (): Promise<string> => {
+    if (!PIGGY_ADDRESS) throw new Error('Contract address not configured');
+    const contract = getReadOnlyContract();
+    const owner = await contract.owner();
+    return owner;
+  }, []);
+
+  const getPaused = useCallback(async (): Promise<boolean> => {
+    if (!PIGGY_ADDRESS) throw new Error('Contract address not configured');
+    const contract = getReadOnlyContract();
+    const paused = await contract.paused();
+    return paused;
+  }, []);
+
   return {
     deposit,
     withdraw,
@@ -253,6 +421,10 @@ export function usePiggyBank(): UsePiggyBankReturn {
     getMyBalance,
     getTotalDeposits,
     withdrawAll,
+    pause,
+    unpause,
+    getOwner,
+    getPaused,
     isLoading,
     error,
   };
