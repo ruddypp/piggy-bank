@@ -21,6 +21,8 @@ const REOWN_PROJECT_ID =
   '';
 
 let reownProviderInstance: ReownProvider | null = null;
+const DISCONNECT_FLAG = 'piggybank_wallet_disconnected';
+
 const setWindowEthereum = (provider: any) => {
   if (typeof window === 'undefined') return;
   try {
@@ -31,6 +33,23 @@ const setWindowEthereum = (provider: any) => {
   } catch {
     // ignore if not allowed
   }
+};
+
+const clearDisconnectFlag = () => {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem(DISCONNECT_FLAG);
+  }
+};
+
+const setDisconnectFlag = () => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(DISCONNECT_FLAG, 'true');
+  }
+};
+
+const isDisconnectFlagSet = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  return localStorage.getItem(DISCONNECT_FLAG) === 'true';
 };
 
 export function useWallet() {
@@ -183,6 +202,9 @@ export function useWallet() {
       }
       await hydrateWalletFromProvider(provider);
 
+      // Clear disconnect flag on successful connection
+      clearDisconnectFlag();
+
       toast.success('Wallet connected!', {
         style: {
           border: '3px solid black',
@@ -203,14 +225,21 @@ export function useWallet() {
   };
 
   const disconnectWallet = async () => {
+    // Set disconnect flag to prevent auto-reconnect
+    setDisconnectFlag();
+
+    // Disconnect Reown provider and clear session
     if (usingReownRef.current && providerRef.current?.disconnect) {
       try {
         await providerRef.current.disconnect();
+        // Clear the Reown provider instance
+        reownProviderInstance = null;
       } catch (error) {
         console.error('Failed to disconnect provider', error);
       }
     }
 
+    // Reset wallet state
     setWallet({
       address: null,
       isConnected: false,
@@ -219,9 +248,23 @@ export function useWallet() {
       chainId: null,
     });
 
+    // Remove all listeners
     providerRef.current?.removeListener?.('accountsChanged', handleAccountsChanged);
     providerRef.current?.removeListener?.('chainChanged', handleChainChanged);
     providerRef.current?.removeListener?.('disconnect', disconnectWallet);
+
+    // Clear provider reference
+    providerRef.current = null;
+    usingReownRef.current = false;
+
+    // Reset window.ethereum if it was set by us
+    if (typeof window !== 'undefined') {
+      try {
+        delete (window as any).ethereum;
+      } catch {
+        // ignore if not allowed
+      }
+    }
 
     toast.success('Wallet disconnected!', {
       style: {
@@ -261,6 +304,11 @@ export function useWallet() {
   useEffect(() => {
     // Check if wallet is already connected
     const checkConnection = async () => {
+      // Don't auto-reconnect if user manually disconnected
+      if (isDisconnectFlagSet()) {
+        return;
+      }
+
       try {
         if (REOWN_PROJECT_ID) {
           const provider = await getReownProvider();
@@ -269,6 +317,8 @@ export function useWallet() {
             setWindowEthereum(provider);
             await hydrateWalletFromProvider(provider);
             attachProviderListeners(provider);
+            // Clear disconnect flag if successfully reconnected
+            clearDisconnectFlag();
           }
           return;
         }
@@ -282,6 +332,8 @@ export function useWallet() {
           providerRef.current = window.ethereum;
           await hydrateWalletFromProvider(window.ethereum);
           attachProviderListeners(window.ethereum);
+          // Clear disconnect flag if successfully reconnected
+          clearDisconnectFlag();
         }
       } catch (error) {
         console.error('Failed to check connection:', error);

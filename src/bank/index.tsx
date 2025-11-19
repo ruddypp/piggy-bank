@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Header } from '../components/Header';
 import { TabMenu } from '../components/TabMenu';
-import { DashboardFooter } from '../components/DashboardFooter';
+import { Footer } from '../components/Footer';
 import { DepositCard } from '../components/DepositCard';
 import { WithdrawCard } from '../components/WithdrawCard';
 import { TransferCard } from '../components/TransferCard';
@@ -94,7 +94,7 @@ const BankDashboard = () => {
           </div>
         </div>
 
-        <DashboardFooter />
+        <Footer variant="dashboard" />
       </div>
 
       <Toaster position="top-center" />

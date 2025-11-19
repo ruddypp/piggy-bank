@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Wallet, LogOut, RefreshCw, Copy, Check, LayoutDashboard, Building2 } from 'lucide-react';
+import { PiggyBank,Wallet, LogOut, RefreshCw, Copy, Check, LayoutDashboard, Building2 } from 'lucide-react';
 import { useWallet } from '../hooks/useWallet';
 import { usePiggyBank } from '../hooks/usePiggyBank';
 import { useState, useEffect } from 'react';
@@ -127,7 +127,7 @@ export function Header() {
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
             >
-              <Wallet className="w-8 h-8 text-[#f9dc5c]" strokeWidth={2.5} />
+              <PiggyBank className="w-8 h-8 text-[#f9dc5c]" strokeWidth={2.5} />
             </motion.div>
             <div>
               <h1 className="text-4xl font-black tracking-tight text-black">PiggyBank</h1>

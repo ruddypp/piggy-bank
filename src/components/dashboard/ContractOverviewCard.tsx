@@ -7,6 +7,7 @@ interface ContractOverviewCardProps {
   ownerAddress: string;
   isPaused: boolean;
   isLoading: boolean;
+  isOwner: boolean;
 }
 
 export function ContractOverviewCard({
@@ -15,7 +16,12 @@ export function ContractOverviewCard({
   ownerAddress,
   isPaused,
   isLoading,
+  isOwner,
 }: ContractOverviewCardProps) {
+  // Only show Contract Overview to owner
+  if (!isOwner) {
+    return null;
+  }
   const formatAddress = (addr: string) => {
     if (!addr) return 'N/A';
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;

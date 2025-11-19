@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Header } from '../components/Header';
-import { DashboardFooter } from '../components/DashboardFooter';
+import { Footer } from '../components/Footer';
 import { FallingPigsBackground } from '../components/FallingPigsBackground';
 import { Toaster } from 'sonner';
 import { usePiggyBank } from '../hooks/usePiggyBank';
@@ -174,6 +174,7 @@ const ContractDashboard = () => {
                 ownerAddress={ownerAddress}
                 isPaused={isPaused}
                 isLoading={isLoadingData}
+                isOwner={isOwner}
               />
 
               <AdminControlsCard
@@ -194,7 +195,7 @@ const ContractDashboard = () => {
           </motion.div>
         </div>
 
-        <DashboardFooter />
+        <Footer variant="dashboard" />
       </div>
 
       <Toaster position="top-center" />
